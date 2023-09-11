@@ -7,12 +7,15 @@ export const FIELD_TYPES = {
   TEXTAREA: 2,
 };
 
-const Field = ({ type = FIELD_TYPES.INPUT_TEXT, label, name, placeholder }) => {
+const Field = ({ type = FIELD_TYPES.INPUT_TEXT, label, name, placeholder, errorMessage }) => {
   let component;
+  const inputClassName = errorMessage ? "input-error" : "";
+
   switch (type) {
     case FIELD_TYPES.INPUT_TEXT:
       component = (
         <input
+          className={inputClassName}
           type="text"
           name={name}
           placeholder={placeholder}
@@ -21,11 +24,18 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, label, name, placeholder }) => {
       );
       break;
     case FIELD_TYPES.TEXTAREA:
-      component = <textarea name={name} data-testid="field-testid" />;
+      component = (
+        <textarea
+          className={inputClassName}
+          name={name}
+          data-testid="field-testid"
+        />
+      );
       break;
     default:
       component = (
         <input
+          className={inputClassName}
           type="text"
           name={name}
           placeholder={placeholder}
@@ -33,25 +43,31 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, label, name, placeholder }) => {
         />
       );
   }
+  
   return (
     <div className="inputField">
       <span>{label}</span>
       {component}
+      {errorMessage && <span className="error-message">{errorMessage}</span>}
     </div>
   );
 };
+
 
 Field.propTypes = {
   type: PropTypes.oneOf(Object.values(FIELD_TYPES)),
   name: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
+  errorMessage: PropTypes.string,
 };
- Field.defaultProps = {
-   label: "",
-   placeholder: "",
-   type: FIELD_TYPES.INPUT_TEXT,
-   name: "field-name",
- }
+
+Field.defaultProps = {
+  label: "",
+  placeholder: "",
+  type: FIELD_TYPES.INPUT_TEXT,
+  name: "field-name",
+  errorMessage: null,
+};
 
 export default Field;
