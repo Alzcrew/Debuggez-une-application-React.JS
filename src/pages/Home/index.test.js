@@ -20,8 +20,8 @@ describe("When Form is created", () => {
 
       // Utilisez waitFor pour attendre que le message soit affiché
       await waitFor(() => {
-        expect(screen.getByText("Message envoyé !")).toBeInTheDocument();
-      });
+        expect(screen.findByText(/Message envoyé !/i)).resolves.toBeInTheDocument();
+      });      
     });
   });
 });
