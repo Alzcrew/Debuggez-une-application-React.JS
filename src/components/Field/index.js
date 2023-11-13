@@ -7,7 +7,14 @@ export const FIELD_TYPES = {
   TEXTAREA: 2,
 };
 
-const Field = ({ type = FIELD_TYPES.INPUT_TEXT, label, name, placeholder, errorMessage }) => {
+const Field = ({
+  type = FIELD_TYPES.INPUT_TEXT,
+  label,
+  name,
+  placeholder,
+  errorMessage,
+  testId, // Ajouter la prop testId
+}) => {
   let component;
   const inputClassName = errorMessage ? "input-error" : "";
 
@@ -19,7 +26,7 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, label, name, placeholder, errorM
           type="text"
           name={name}
           placeholder={placeholder}
-          data-testid="field-testid"
+          data-testid={testId} // Utiliser la prop testId
         />
       );
       break;
@@ -28,7 +35,7 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, label, name, placeholder, errorM
         <textarea
           className={inputClassName}
           name={name}
-          data-testid="field-testid"
+          data-testid={testId} // Utiliser la prop testId
         />
       );
       break;
@@ -39,7 +46,7 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, label, name, placeholder, errorM
           type="text"
           name={name}
           placeholder={placeholder}
-          data-testid="field-testid"
+          data-testid={testId} // Utiliser la prop testId
         />
       );
   }
@@ -53,13 +60,13 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, label, name, placeholder, errorM
   );
 };
 
-
 Field.propTypes = {
   type: PropTypes.oneOf(Object.values(FIELD_TYPES)),
   name: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
   errorMessage: PropTypes.string,
+  testId: PropTypes.string, // Ajouter testId aux propTypes
 };
 
 Field.defaultProps = {
@@ -68,6 +75,7 @@ Field.defaultProps = {
   type: FIELD_TYPES.INPUT_TEXT,
   name: "field-name",
   errorMessage: null,
+  testId: "field-testid", // Définir une valeur par défaut pour testId
 };
 
 export default Field;
